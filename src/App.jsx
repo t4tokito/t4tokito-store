@@ -24,18 +24,18 @@ function ScrollToTop() {
   return null
 }
 
-function SEO({ title, description, canonical, ogImage, noIndex = false }) {
+function SEO({ title, description, canonical, noIndex = false }) {
   const siteName = 't4tokito Store'
-  const fullTitle = title ? `${title} | ${siteName}` : siteName
+  const fullTitle = title ? `${title} | ${siteName}` : `${siteName} - Free Apps by t4tokito | Tokito Store`
   const url = canonical || `https://t4tokito.store${window.location.pathname}`
-  const image = ogImage || 'https://t4tokito.store/og-image.png'
+  const image = 'https://t4tokito.store/logo.jpeg'
 
   return (
     <Helmet>
       <html lang="en" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
       <link rel="canonical" href={url} />
 
       <meta property="og:title" content={fullTitle} />
@@ -43,7 +43,7 @@ function SEO({ title, description, canonical, ogImage, noIndex = false }) {
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={siteName} />
+      <meta property="og:site_name" content="t4tokito Store" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
@@ -57,13 +57,11 @@ function HomePage() {
   return (
     <>
       <SEO
-        title="Official App Store for TokitoTV & YT Notes Maker"
-        description="Download TokitoTV (Anime Streaming App) and YT Notes Maker (YouTube to Notes AI App) from the official t4tokito Store. Free APK downloads for Android."
-        ogImage="https://t4tokito.store/og-image.png"
+        description="t4tokito Store - Official app store by t4tokito. Download TokitoTV anime streaming app and YT Notes Maker AI notes app for free. Open source, no ads. Also known as Tokito Store and Muichiro Store."
       />
       <div className="home-page">
         <Header />
-        <main>
+        <main id="main-content">
           <Hero />
           <Stats />
           <AppGrid />
@@ -78,15 +76,11 @@ function HomePage() {
 }
 
 function AppDetailPage() {
-  return (
-    <AppDetail />
-  )
+  return <AppDetail />
 }
 
 function DownloadPageWrapper() {
-  return (
-    <DownloadPage />
-  )
+  return <DownloadPage />
 }
 
 function PrivacyPolicyPage() {
