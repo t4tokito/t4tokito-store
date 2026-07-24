@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(mv * ..)",
+      "Bash(mv .* ..)",
+      "Bash(rmdir t4tokito-store *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  }
+}
