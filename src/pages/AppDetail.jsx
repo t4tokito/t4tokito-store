@@ -37,15 +37,15 @@ export default function AppDetail() {
         <title>{app.name} - Download Free APK | t4tokito Store | Tokito Store</title>
         <meta name="description" content={`Download ${app.name} free from t4tokito Store. ${app.description} Also known as Tokito Store and Muichiro Store.`} />
         <meta name="keywords" content={`${app.name}, ${app.name} download, t4tokito store, tokito store, muichiro store, free android app, ${app.category.toLowerCase()} app`} />
-        <link rel="canonical" href={`https://t4tokito.store/apps/${app.id}`} />
+        <link rel="canonical" href={`https://t4tokito-store.netlify.app/apps/${app.id}`} />
         <meta property="og:title" content={`${app.name} - Download Free | t4tokito Store`} />
         <meta property="og:description" content={app.description} />
-        <meta property="og:url" content={`https://t4tokito.store/apps/${app.id}`} />
-        <meta property="og:image" content="https://t4tokito.store/logo.jpeg" />
+        <meta property="og:url" content={`https://t4tokito-store.netlify.app/apps/${app.id}`} />
+        <meta property="og:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${app.name} - Download Free | t4tokito Store`} />
         <meta name="twitter:description" content={app.description} />
-        <meta name="twitter:image" content="https://t4tokito.store/logo.jpeg" />
+        <meta name="twitter:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
       </Helmet>
 
       <Header />

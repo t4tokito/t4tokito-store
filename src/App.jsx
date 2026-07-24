@@ -27,8 +27,8 @@ function ScrollToTop() {
 function SEO({ title, description, canonical, noIndex = false }) {
   const siteName = 't4tokito Store'
   const fullTitle = title ? `${title} | ${siteName}` : `${siteName} - Free Apps by t4tokito | Tokito Store`
-  const url = canonical || `https://t4tokito.store${window.location.pathname}`
-  const image = 'https://t4tokito.store/logo.jpeg'
+  const url = canonical || `https://t4tokito-store.netlify.app${window.location.pathname}`
+  const image = 'https://t4tokito-store.netlify.app/logo.jpeg'
 
   return (
     <Helmet>
