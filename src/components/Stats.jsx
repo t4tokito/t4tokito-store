@@ -31,6 +31,9 @@ export default function Stats() {
                   padding: 'var(--space-6) var(--space-4)',
                   textAlign: 'center',
                   borderLeft: i === 0 ? 'none' : '1px solid var(--line)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
                 className="stat-cell"
               >
