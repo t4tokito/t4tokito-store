@@ -105,7 +105,6 @@ export default function DownloadPage() {
                 )}
               </button>
             )}
-            </button>
 
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-3)', flexWrap: 'wrap' }}>
               <Link to={`/apps/${app.id}`} className="btn btn-secondary" style={{ flex: 1, minWidth: 150 }}>App details</Link>
