@@ -1,298 +1,117 @@
 import { Link } from 'react-router-dom';
+import { apps } from '../data/apps';
+
+function Stars({ value }) {
+  return (
+    <span className="stars" role="img" aria-label={`Rated ${value} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"
+          fill={i < Math.round(value) ? 'currentColor' : 'none'}
+          stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      ))}
+    </span>
+  );
+}
 
 export default function Hero() {
   return (
-    <section
-      id="hero"
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        paddingTop: 'var(--header-height)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-      aria-labelledby="hero-title"
-    >
-      {/* Background decorative elements */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-        aria-hidden="true"
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: '-200px',
-            right: '-200px',
-            width: '500px',
-            height: '500px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(67,61,139,0.15) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '-150px',
-            left: '-150px',
-            width: '400px',
-            height: '400px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(200,172,214,0.08) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-          }}
-        />
-      </div>
+    <section id="hero" aria-labelledby="hero-title" style={{ position: 'relative', overflow: 'hidden', paddingTop: 'calc(var(--header-height) + var(--space-16))', paddingBottom: 'var(--space-16)' }}>
+      <div className="paper-grid" aria-hidden="true" style={{ position: 'absolute', inset: 0 }} />
+      <div aria-hidden="true" style={{ position: 'absolute', top: -120, left: '50%', transform: 'translateX(-50%)', width: 640, height: 340, borderRadius: '50%', background: 'radial-gradient(closest-side, var(--brand-soft), transparent)', filter: 'blur(10px)', pointerEvents: 'none' }} />
 
-      <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-        <div
-          className="hero-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 'var(--space-12)',
-            alignItems: 'center',
-            maxWidth: '1280px',
-            margin: '0 auto',
-          }}
-        >
-          {/* Left Content */}
-          <div style={{ textAlign: 'left' }}>
-            <div
-              className="animate-slide-up"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                padding: 'var(--space-2) var(--space-4)',
-                background: 'var(--accent-primary-light)',
-                border: '1px solid rgba(255,107,53,0.3)',
-                borderRadius: 'var(--radius-full)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 600,
-                color: 'var(--accent-primary)',
-                marginBottom: 'var(--space-6)',
-              }}
+      <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 860 }}>
+        <p className="eyebrow animate-rise" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          <span className="dot" aria-hidden="true" />
+          t4tokito store · 2 apps · 100% free
+        </p>
+
+        <h1 id="hero-title" className="animate-rise stagger-1" style={{ marginBottom: 'var(--space-5)' }}>
+          Free Android apps
+          <br />
+          that <span style={{ color: 'var(--brand)' }}>respect&nbsp;you.</span>
+        </h1>
+
+        <p className="animate-rise stagger-2" style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: 'var(--muted)', maxWidth: 620, margin: '0 auto var(--space-8)', lineHeight: 1.7 }}>
+          Download <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>TokitoTV</strong> for anime streaming
+          and <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>YT Notes Maker</strong> for AI study notes.
+          No ads, no tracking — and every line of code is open source.
+        </p>
+
+        <div className="animate-rise stagger-3" style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap', marginBottom: 'var(--space-8)' }}>
+          <a href="#apps" className="btn btn-primary btn-lg">
+            Browse apps
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
+            </svg>
+          </a>
+          <a href="https://github.com/t4tokito" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-lg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+            </svg>
+            Star on GitHub
+          </a>
+        </div>
+
+        <div className="animate-rise stagger-4" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-5)', flexWrap: 'wrap', fontSize: 'var(--text-sm)', color: 'var(--muted)', marginBottom: 'var(--space-12)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <Stars value={5} /> <strong style={{ color: 'var(--ink)' }}>4.8/5</strong> average rating
+          </span>
+          <span aria-hidden="true" style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--line-strong)' }} />
+          <span><strong style={{ color: 'var(--ink)' }}>15K+</strong> downloads</span>
+          <span aria-hidden="true" style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--line-strong)' }} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+            No ads · No tracking
+          </span>
+        </div>
+
+        {/* Signature: Play-Store-style listing cards with oversized rating numerals */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)', textAlign: 'left' }} className="hero-cards">
+          {apps.map((app, i) => (
+            <Link
+              key={app.id}
+              to={`/apps/${app.id}`}
+              className={`card card-hover animate-rise stagger-${i + 3}`}
+              style={{ padding: 'var(--space-6)', display: 'flex', gap: 'var(--space-5)', alignItems: 'flex-start' }}
+              aria-label={`${app.name} — ${app.tagline}. Rated ${app.rating} out of 5. View details and download.`}
             >
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-primary)' }} />
-              <span>t4tokito's Official App Store</span>
-            </div>
-
-            <h1
-              id="hero-title"
-              className="animate-slide-up stagger-1"
-              style={{
-                fontSize: 'clamp(var(--text-4xl), 6vw, var(--text-6xl))',
-                fontWeight: 800,
-                lineHeight: 1.1,
-                letterSpacing: '-0.03em',
-                marginBottom: 'var(--space-6)',
-                color: 'var(--fg-primary)',
-              }}
-            >
-              Apps Built by<br />
-              <span className="gradient-text">t4tokito</span>
-            </h1>
-
-            <p
-              className="animate-slide-up stagger-2"
-              style={{
-                fontSize: 'clamp(var(--text-lg), 2vw, var(--text-xl))',
-                color: 'var(--fg-secondary)',
-                lineHeight: 1.7,
-                marginBottom: 'var(--space-8)',
-                maxWidth: '500px',
-              }}
-            >
-              This is the official store for all apps made by t4tokito.
-              Free, open source, and built with love using modern tech.
-            </p>
-
-            <div
-              className="hero-actions animate-slide-up stagger-3"
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 'var(--space-4)',
-                marginBottom: 'var(--space-12)',
-              }}
-            >
-              <a
-                href="#apps"
-                className="btn btn-primary btn-lg"
-                style={{ minWidth: 200 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-                Browse Apps
-              </a>
-              <a
-                href="https://github.com/t4tokito"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline btn-lg"
-                style={{ minWidth: 200 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                </svg>
-                Source Code
-              </a>
-            </div>
-
-            {/* Trust indicators */}
-            <div
-              className="hero-trust animate-slide-up stagger-4"
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                gap: 'var(--space-6)',
-                fontSize: 'var(--text-sm)',
-                color: '#B5B9F0',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B5B9F0" strokeWidth="2" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>100% Free</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B5B9F0" strokeWidth="2" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Open Source</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B5B9F0" strokeWidth="2" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>No Ads</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - App showcase cards */}
-          <div className="hero-phone animate-slide-up stagger-2" style={{ position: 'relative' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {/* TokitoTV Card */}
-              <Link
-                to="/apps/tokitotv"
+              <div
+                aria-hidden="true"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-5)',
-                  padding: 'var(--space-6)',
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-primary)',
-                  borderRadius: 'var(--radius-xl)',
-                  textDecoration: 'none',
-                  transition: 'all var(--transition-base)',
-                  boxShadow: 'var(--shadow-lg)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#433D8B';
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(67,61,139,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-primary)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                  width: 62, height: 62, borderRadius: 18, flexShrink: 0,
+                  background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '1.9rem', boxShadow: 'var(--shadow-md)',
                 }}
               >
-                <div
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 16,
-                    background: 'linear-gradient(135deg, #433D8B, #433D8Bcc)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 28,
-                    flexShrink: 0,
-                    boxShadow: '0 8px 24px rgba(67,61,139,0.3)',
-                  }}
-                >
-                  🎬
+                {app.icon}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1 }}>
+                    {app.rating}
+                  </span>
+                  <Stars value={app.rating} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--fg-primary)', marginBottom: 'var(--space-1)' }}>TokitoTV</h3>
-                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--fg-muted)', lineHeight: 1.5 }}>Anime streaming app with trending shows, continue watching, and dark theme</p>
-                  <span className="badge badge-primary" style={{ marginTop: 'var(--space-2)' }}>Entertainment</span>
-                </div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--fg-muted)" strokeWidth="2" aria-hidden="true" style={{ flexShrink: 0 }}>
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </Link>
-
-              {/* YT Notes Maker Card */}
-              <Link
-                to="/apps/yt-notes-maker"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-5)',
-                  padding: 'var(--space-6)',
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-primary)',
-                  borderRadius: 'var(--radius-xl)',
-                  textDecoration: 'none',
-                  transition: 'all var(--transition-base)',
-                  boxShadow: 'var(--shadow-lg)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#C8ACD6';
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(200,172,214,0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-primary)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                }}
-              >
-                <div
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 16,
-                    background: 'linear-gradient(135deg, #C8ACD6, #C8ACD6cc)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 28,
-                    flexShrink: 0,
-                    boxShadow: '0 8px 24px rgba(200,172,214,0.2)',
-                  }}
-                >
-                  📝
-                </div>
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--fg-primary)', marginBottom: 'var(--space-1)' }}>YT Notes Maker</h3>
-                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--fg-muted)', lineHeight: 1.5 }}>Turn YouTube videos into AI-powered notes, flashcards, and quizzes</p>
-                  <span className="badge badge-secondary" style={{ marginTop: 'var(--space-2)' }}>Productivity</span>
-                </div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--fg-muted)" strokeWidth="2" aria-hidden="true" style={{ flexShrink: 0 }}>
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </Link>
-            </div>
-          </div>
+                <h2 style={{ fontSize: 'var(--text-lg)', marginTop: 6 }}>{app.name}</h2>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)', marginTop: 2 }}>{app.tagline} · {app.size} · {app.downloads} downloads</p>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 'var(--space-3)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--brand)' }}>
+                  Get the app
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .hero-cards { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

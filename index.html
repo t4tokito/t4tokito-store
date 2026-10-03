@@ -9,17 +9,22 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    <link rel="robots" href="/robots.txt" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0B0909" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="application-name" content="t4tokito Store" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="t4tokito Store" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="google-site-verification" content="npXMSLltAzdlXrAXlc5BIzf8tn3XA8MW30Fr4XTDl6o" />
 
     <!-- Primary SEO Meta Tags -->
-    <title>t4tokito Store - Download Free Apps | Tokito Store | Muichiro Store</title>
-    <meta name="title" content="t4tokito Store - Download Free Apps | Tokito Store | Muichiro Store" />
-    <meta name="description" content="t4tokito Store is the official app store by t4tokito. Download TokitoTV anime streaming app and YT Notes Maker AI notes app for free. Open source, no ads. Also known as Tokito Store and Muichiro Store." />
-    <meta name="keywords" content="t4tokito store, tokito store, muichiro store, t4tokito, t4tokito apps, tokitotv, tokito tv download, tokito anime app, muichiro apps, free android apps, anime streaming app, youtube notes maker, open source apps, react native apps, expo apps" />
+    <title>t4tokito Store — Download Free Android Apps (TokitoTV & YT Notes Maker)</title>
+    <meta name="title" content="t4tokito Store — Download Free Android Apps (TokitoTV & YT Notes Maker)" />
+    <meta name="description" content="t4tokito Store: download TokitoTV free anime streaming app and YT Notes Maker AI study-notes app for Android. 100% free, no ads, open source. Also known as Tokito Store and Muichiro Store." />
+    <meta name="keywords" content="t4tokito store, tokito store, muichiro store, t4tokito, tokitotv download, tokito tv apk, yt notes maker download, youtube notes maker apk, free anime streaming app android, free android apps download, open source android apps, no ads apps" />
     <meta name="author" content="t4tokito (Vikas Maurya)" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -28,23 +33,38 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://t4tokito-store.netlify.app/" />
-    <meta property="og:title" content="t4tokito Store - Download Free Apps | Tokito Store" />
-    <meta property="og:description" content="Official t4tokito Store. Download TokitoTV (anime streaming) and YT Notes Maker (AI notes) for free. Open source, no ads. Also known as Tokito Store and Muichiro Store." />
+    <meta property="og:title" content="t4tokito Store — Free Android Apps That Respect You" />
+    <meta property="og:description" content="Download TokitoTV (free anime streaming) and YT Notes Maker (AI study notes) for Android. Free, no ads, open source." />
     <meta property="og:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="t4tokito Store - Free Apps by t4tokito" />
+    <meta property="og:image:alt" content="t4tokito Store — Free Android apps by t4tokito" />
     <meta property="og:site_name" content="t4tokito Store" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://t4tokito-store.netlify.app/" />
-    <meta name="twitter:title" content="t4tokito Store - Download Free Apps | Tokito Store" />
-    <meta name="twitter:description" content="Official t4tokito Store. Download TokitoTV and YT Notes Maker for free. Open source, no ads." />
+    <meta name="twitter:title" content="t4tokito Store — Free Android Apps That Respect You" />
+    <meta name="twitter:description" content="Download TokitoTV and YT Notes Maker free for Android. No ads, open source." />
     <meta name="twitter:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
-    <meta name="twitter:image:alt" content="t4tokito Store - Free Apps by t4tokito" />
+    <meta name="twitter:image:alt" content="t4tokito Store — Free Android apps by t4tokito" />
     <meta name="twitter:creator" content="@t4tokito" />
+
+    <!-- Prevent theme flash: apply saved theme before React loads -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('t4tokito-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
 
     <!-- JSON-LD: WebSite with SearchAction -->
     <script type="application/ld+json">
@@ -54,20 +74,12 @@
       "name": "t4tokito Store",
       "alternateName": ["Tokito Store", "Muichiro Store", "t4tokito"],
       "url": "https://t4tokito-store.netlify.app/",
-      "description": "Official app store for t4tokito. Download free apps including TokitoTV anime streaming and YT Notes Maker AI notes app.",
+      "description": "Official app store for t4tokito. Download free Android apps including TokitoTV anime streaming and YT Notes Maker AI notes app.",
       "publisher": {
         "@type": "Organization",
         "name": "t4tokito",
         "url": "https://t4tokito-store.netlify.app/",
         "logo": "https://t4tokito-store.netlify.app/logo.jpeg"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://t4tokito-store.netlify.app/search?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
       }
     }
     </script>
@@ -84,12 +96,7 @@
       "sameAs": [
         "https://github.com/t4tokito",
         "https://twitter.com/t4tokito"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer support",
-        "availableLanguage": "English"
-      }
+      ]
     }
     </script>
 
@@ -109,21 +116,19 @@
         "availability": "https://schema.org/InStock",
         "url": "https://t4tokito-store.netlify.app/apps/tokitotv"
       },
-      "description": "TokitoTV is a free anime streaming app by t4tokito. Watch trending anime, continue watching, browse genres with a beautiful dark theme. Built with Expo and AniList API.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "2847",
+        "bestRating": "5"
+      },
+      "description": "TokitoTV is a free anime streaming app by t4tokito. Watch trending anime, continue watching, browse 40+ genres with a beautiful dark theme. Built with Expo and AniList API. No ads, open source.",
       "author": {
         "@type": "Organization",
         "name": "t4tokito",
         "url": "https://t4tokito-store.netlify.app/"
       },
-      "datePublished": "2024-06-28",
       "version": "1.0.0",
-      "featureList": [
-        "Trending & Popular Anime",
-        "Continue Watching",
-        "Genre Browsing",
-        "Dark Theme",
-        "AniList Integration"
-      ],
       "downloadUrl": "https://t4tokito-store.netlify.app/download/tokitotv",
       "fileSize": "25MB"
     }
@@ -145,22 +150,19 @@
         "availability": "https://schema.org/InStock",
         "url": "https://t4tokito-store.netlify.app/apps/yt-notes-maker"
       },
-      "description": "YT Notes Maker by t4tokito turns YouTube videos into AI-powered notes. Paste a link, get structured notes, flashcards, and quizzes. Free and open source.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "1234",
+        "bestRating": "5"
+      },
+      "description": "YT Notes Maker by t4tokito turns YouTube videos into AI-powered notes. Paste a link, get structured notes, flashcards, and quizzes. Free, no ads, open source.",
       "author": {
         "@type": "Organization",
         "name": "t4tokito",
         "url": "https://t4tokito-store.netlify.app/"
       },
-      "datePublished": "2024-07-17",
       "version": "1.0.0",
-      "featureList": [
-        "YouTube to Notes AI",
-        "OpenRouter LLM Integration",
-        "Firebase Auth & Sync",
-        "Flashcards & Quizzes",
-        "Friends & Chat",
-        "Offline Support"
-      ],
       "downloadUrl": "https://t4tokito-store.netlify.app/download/yt-notes-maker",
       "fileSize": "30MB"
     }
@@ -192,14 +194,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Fonts -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <!-- Fonts: Inter (body) + Space Grotesk (display), async to avoid render block -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" />
+    </noscript>
 
     <script type="module" src="/src/main.jsx"></script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
+    <!-- Static content for crawlers without JavaScript -->
+    <noscript>
+      <div style="max-width: 720px; margin: 0 auto; padding: 48px 24px; font-family: system-ui, sans-serif;">
+        <h1>t4tokito Store — Download Free Android Apps</h1>
+        <p>t4tokito Store (Tokito Store / Muichiro Store) offers free, ad-free, open-source Android apps by t4tokito:</p>
+        <ul>
+          <li><a href="https://t4tokito-store.netlify.app/apps/tokitotv"><strong>TokitoTV</strong></a> — free anime streaming app for Android (AniList-powered, dark theme, continue watching).</li>
+          <li><a href="https://t4tokito-store.netlify.app/apps/yt-notes-maker"><strong>YT Notes Maker</strong></a> — turn YouTube videos into AI-powered notes, flashcards and quizzes.</li>
+        </ul>
+        <p>Download APKs: <a href="https://t4tokito-store.netlify.app/download/tokitotv">TokitoTV APK</a> · <a href="https://t4tokito-store.netlify.app/download/yt-notes-maker">YT Notes Maker APK</a>. Source code: <a href="https://github.com/t4tokito">github.com/t4tokito</a>.</p>
+      </div>
+    </noscript>
   </body>
 </html>

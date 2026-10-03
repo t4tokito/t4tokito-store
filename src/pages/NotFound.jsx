@@ -11,43 +11,16 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-16))', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: 500 }}>
-          <div
-            style={{
-              fontSize: '6rem',
-              fontWeight: 800,
-              background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              lineHeight: 1,
-              marginBottom: 'var(--space-4)',
-            }}
-            aria-hidden="true"
-          >
-            404
-          </div>
-
-          <h1 style={{ fontSize: 'var(--text-3xl)', fontWeight: 700, marginBottom: 'var(--space-4)' }}>
-            Page Not Found
-          </h1>
-
-          <p style={{ color: 'var(--fg-secondary)', fontSize: 'var(--text-lg)', marginBottom: 'var(--space-8)' }}>
-            The page you're looking for doesn't exist or has been moved.
+      <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-20))', paddingBottom: 'var(--space-20)', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
+        <div className="container animate-rise" style={{ textAlign: 'center', maxWidth: 520 }}>
+          <p className="eyebrow">404</p>
+          <h1 style={{ marginBottom: 'var(--space-4)' }}>Lost in the store?</h1>
+          <p className="muted" style={{ fontSize: 'var(--text-lg)', marginBottom: 'var(--space-8)' }}>
+            The page you&apos;re looking for doesn&apos;t exist or was moved. The apps are still right here, though.
           </p>
-
-          <div style={{ display: 'flex', gap: 'var(--space-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/" className="btn btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Back to Store
-            </Link>
-            <Link to="/apps/tokitotv" className="btn btn-outline">
-              Browse Apps
-            </Link>
+          <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/" className="btn btn-primary btn-lg">Back to store</Link>
+            <Link to="/apps/tokitotv" className="btn btn-secondary btn-lg">Browse apps</Link>
           </div>
         </div>
       </main>

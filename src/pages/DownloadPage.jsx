@@ -5,6 +5,12 @@ import { getAppById } from '../data/apps';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+const steps = [
+  { title: 'Download the APK', text: 'Tap the button below. The file is small (25–30 MB) and comes straight from the open-source release.' },
+  { title: 'Allow installs from your browser', text: 'Android will ask for permission once (“Install unknown apps”). Allow it for your browser — this is standard for apps outside the Play Store.' },
+  { title: 'Open the file and install', text: 'Open the downloaded APK from your notifications or Downloads folder, tap Install, and you\u2019re done. Updates work the same way.' },
+];
+
 export default function DownloadPage() {
   const { appId } = useParams();
   const app = getAppById(appId);
@@ -18,13 +24,11 @@ export default function DownloadPage() {
     return (
       <>
         <Header />
-        <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-16))', minHeight: '60vh', textAlign: 'center' }}>
+        <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-20))', minHeight: '60vh', textAlign: 'center' }}>
           <div className="container">
-            <h1 style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-4)' }}>App Not Found</h1>
-            <p style={{ color: 'var(--fg-secondary)', marginBottom: 'var(--space-8)' }}>
-              The app you're trying to download doesn't exist.
-            </p>
-            <Link to="/" className="btn btn-primary">Back to Store</Link>
+            <h1 style={{ marginBottom: 'var(--space-4)' }}>App not found</h1>
+            <p className="muted" style={{ marginBottom: 'var(--space-8)' }}>The app you&apos;re trying to download doesn&apos;t exist.</p>
+            <Link to="/" className="btn btn-primary">Back to store</Link>
           </div>
         </main>
         <Footer />
@@ -32,11 +36,13 @@ export default function DownloadPage() {
     );
   }
 
+  const canonical = `https://t4tokito-store.netlify.app/download/${app.id}`;
+
   const handleDownload = () => {
     setDownloading(true);
     const link = document.createElement('a');
     link.href = app.downloadUrl;
-    link.download = '';
+    link.setAttribute('download', '');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -46,114 +52,97 @@ export default function DownloadPage() {
   return (
     <>
       <Helmet>
-        <title>Download {app.name} Free APK | t4tokito Store | Tokito Store</title>
-        <meta name="description" content={`Download ${app.name} free from t4tokito Store. ${app.description} Free APK download for Android.`} />
-        <meta name="keywords" content={`download ${app.name}, ${app.name} apk, t4tokito store, tokito store, muichiro store, free android download`} />
-        <link rel="canonical" href={`https://t4tokito-store.netlify.app/download/${app.id}`} />
+        <title>Download {app.name} APK Free for Android (v{app.version}) | t4tokito Store</title>
+        <meta name="description" content={`Download ${app.name} v${app.version} APK free for Android ${app.androidVersion}. ${app.description} Safe, no ads, open source.`} />
+        <link rel="canonical" href={canonical} />
         <meta property="og:title" content={`Download ${app.name} Free | t4tokito Store`} />
-        <meta property="og:description" content={`Download ${app.name} free from t4tokito Store. ${app.description}`} />
-        <meta property="og:url" content={`https://t4tokito-store.netlify.app/download/${app.id}`} />
+        <meta property="og:description" content={`${app.tagline} · ${app.size} · Android ${app.androidVersion} · Rated ${app.rating}/5`} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`Download ${app.name} Free | t4tokito Store`} />
-        <meta name="twitter:description" content={`Download ${app.name} free from t4tokito Store.`} />
-        <meta name="twitter:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
+        <meta name="twitter:card" content="summary" />
       </Helmet>
 
       <Header />
 
-      <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-16))', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: 600 }}>
-          <div
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 'var(--radius-xl)',
-              background: `linear-gradient(135deg, ${app.color}, ${app.color}cc)`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '3rem',
-              margin: '0 auto var(--space-6)',
-              boxShadow: `0 12px 40px ${app.color}40`,
-            }}
-            aria-hidden="true"
-          >
-            {app.icon}
-          </div>
+      <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-12))', paddingBottom: 'var(--space-16)' }}>
+        <div className="container animate-rise" style={{ maxWidth: 640 }}>
+          <nav aria-label="Breadcrumb" style={{ marginBottom: 'var(--space-6)', fontSize: 'var(--text-sm)', color: 'var(--muted)', textAlign: 'center' }}>
+            <Link to="/" style={{ color: 'var(--muted)' }}>Store</Link>
+            <span aria-hidden="true" style={{ margin: '0 8px' }}>/</span>
+            <Link to={`/apps/${app.id}`} style={{ color: 'var(--muted)' }}>{app.name}</Link>
+            <span aria-hidden="true" style={{ margin: '0 8px' }}>/</span>
+            <span aria-current="page" style={{ color: 'var(--ink)', fontWeight: 600 }}>Download</span>
+          </nav>
 
-          <h1 style={{ fontSize: 'var(--text-4xl)', fontWeight: 800, marginBottom: 'var(--space-2)' }}>
-            Download {app.name}
-          </h1>
-          <p style={{ color: 'var(--fg-secondary)', fontSize: 'var(--text-lg)', marginBottom: 'var(--space-8)' }}>
-            {app.tagline} &bull; {app.size} &bull; Android {app.androidVersion}
-          </p>
-
-          <div className="download-actions" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', maxWidth: 400, margin: '0 auto' }}>
-            <button
-              onClick={handleDownload}
-              disabled={downloading}
-              className="btn btn-primary btn-lg btn-full"
-              style={{ fontSize: 'var(--text-lg)' }}
+          <div className="card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)', textAlign: 'center' }}>
+            <div
+              aria-hidden="true"
+              style={{
+                width: 88, height: 88, borderRadius: 24, margin: '0 auto var(--space-5)',
+                background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '2.6rem', boxShadow: 'var(--shadow-lg)',
+              }}
             >
+              {app.icon}
+            </div>
+            <p className="chip chip-mint" style={{ marginBottom: 'var(--space-3)' }}>Free · No ads · Open source</p>
+            <h1 style={{ fontSize: 'clamp(1.7rem, 4vw, 2.4rem)' }}>Download {app.name}</h1>
+            <p className="muted" style={{ marginTop: 'var(--space-2)', fontSize: 'var(--text-base)' }}>
+              v{app.version} · {app.size} · Android {app.androidVersion} · ★ {app.rating} ({app.reviews.toLocaleString('en-US')})
+            </p>
+
+            <button onClick={handleDownload} disabled={downloading} className="btn btn-primary btn-lg btn-full" style={{ marginTop: 'var(--space-6)', fontSize: 'var(--text-base)' }}>
               {downloading ? (
-                <>
-                  <span className="animate-spin" style={{ display: 'inline-block' }}>⏳</span>
-                  Downloading...
-                </>
+                <><span className="animate-spin" style={{ display: 'inline-block' }} aria-hidden="true">⏳</span> Preparing download…</>
               ) : (
                 <>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
                   </svg>
                   Download {app.name} APK
                 </>
               )}
             </button>
 
-            <Link to={`/apps/${app.id}`} className="btn btn-outline btn-full">
-              View Details
-            </Link>
-
-            <a
-              href={app.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost btn-full"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-              </svg>
-              View Source on GitHub
-            </a>
+            <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-3)', flexWrap: 'wrap' }}>
+              <Link to={`/apps/${app.id}`} className="btn btn-secondary" style={{ flex: 1, minWidth: 150 }}>App details</Link>
+              <a href={app.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ flex: 1, minWidth: 150 }}>GitHub source</a>
+            </div>
           </div>
 
-          <div style={{ marginTop: 'var(--space-10)', padding: 'var(--space-6)', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-primary)', textAlign: 'left' }}>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>App Info</h3>
-            <div className="download-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
-              <div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)', marginBottom: 2 }}>Version</div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{app.version}</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)', marginBottom: 2 }}>Size</div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{app.size}</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)', marginBottom: 2 }}>Android</div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{app.androidVersion}</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)', marginBottom: 2 }}>Updated</div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{app.updated}</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)', marginBottom: 2 }}>Category</div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{app.category}</div>
-              </div>
-            </div>
+          <section aria-labelledby="install-heading" className="card" style={{ padding: 'clamp(1.5rem, 5vw, 2rem)', marginTop: 'var(--space-6)', textAlign: 'left' }}>
+            <h2 id="install-heading" style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-5)' }}>How to install</h2>
+            <ol style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', counterReset: 'step' }}>
+              {steps.map((s, i) => (
+                <li key={s.title} style={{ display: 'flex', gap: 'var(--space-4)' }}>
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      flexShrink: 0, width: 32, height: 32, borderRadius: '50%',
+                      background: 'var(--ink)', color: 'var(--bg)',
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      fontWeight: 700, fontSize: 'var(--text-sm)',
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <div>
+                    <p style={{ fontWeight: 700, color: 'var(--ink)' }}>{s.title}</p>
+                    <p className="muted" style={{ fontSize: 'var(--text-sm)', marginTop: 2 }}>{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <div className="card" style={{ padding: 'var(--space-6)', marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-4)', textAlign: 'left', borderStyle: 'dashed' }}>
+            <span aria-hidden="true" style={{ fontSize: '1.4rem' }}>🛡️</span>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--ink-2)' }}>
+              <strong style={{ color: 'var(--ink)' }}>Safe to install.</strong> This APK is built from the{' '}
+              <a href={app.githubUrl} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 600 }}>public source code</a>{' '}
+              with no ad or tracking SDKs. Always download from this official domain.
+            </p>
           </div>
         </div>
       </main>

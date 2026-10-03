@@ -1,9 +1,24 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { getAppById } from '../data/apps';
+import { getAppById, apps } from '../data/apps';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Reveal from '../components/Reveal';
+
+function Stars({ value }) {
+  return (
+    <span className="stars" role="img" aria-label={`Rated ${value} out of 5`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"
+          fill={i < Math.round(value) ? 'currentColor' : 'none'}
+          stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      ))}
+    </span>
+  );
+}
 
 export default function AppDetail() {
   const { appId } = useParams();
@@ -17,13 +32,11 @@ export default function AppDetail() {
     return (
       <>
         <Header />
-        <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-16))', minHeight: '60vh', textAlign: 'center' }}>
+        <main style={{ paddingTop: 'calc(var(--header-height) + var(--space-20))', minHeight: '60vh', textAlign: 'center' }}>
           <div className="container">
-            <h1 style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-4)' }}>App Not Found</h1>
-            <p style={{ color: 'var(--fg-secondary)', marginBottom: 'var(--space-8)' }}>
-              The app you're looking for doesn't exist or has been removed.
-            </p>
-            <Link to="/" className="btn btn-primary">Back to Store</Link>
+            <h1 style={{ marginBottom: 'var(--space-4)' }}>App not found</h1>
+            <p className="muted" style={{ marginBottom: 'var(--space-8)' }}>This app doesn&apos;t exist or was removed from the store.</p>
+            <Link to="/" className="btn btn-primary">Back to store</Link>
           </div>
         </main>
         <Footer />
@@ -31,218 +44,239 @@ export default function AppDetail() {
     );
   }
 
+  const other = apps.find((a) => a.id !== app.id);
+  const canonical = `https://t4tokito-store.netlify.app/apps/${app.id}`;
+
+  const softwareJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: app.name,
+    applicationCategory: app.category === 'Entertainment' ? 'EntertainmentApplication' : 'ProductivityApplication',
+    operatingSystem: `Android ${app.androidVersion}`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: canonical },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: String(app.rating), reviewCount: String(app.reviews), bestRating: '5' },
+    description: app.description,
+    author: { '@type': 'Organization', name: 't4tokito', url: 'https://t4tokito-store.netlify.app/' },
+    version: app.version,
+    downloadUrl: `https://t4tokito-store.netlify.app/download/${app.id}`,
+    fileSize: app.size,
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://t4tokito-store.netlify.app/' },
+      { '@type': 'ListItem', position: 2, name: app.name, item: canonical },
+    ],
+  };
+
   return (
     <>
       <Helmet>
-        <title>{app.name} - Download Free APK | t4tokito Store | Tokito Store</title>
-        <meta name="description" content={`Download ${app.name} free from t4tokito Store. ${app.description} Also known as Tokito Store and Muichiro Store.`} />
-        <meta name="keywords" content={`${app.name}, ${app.name} download, t4tokito store, tokito store, muichiro store, free android app, ${app.category.toLowerCase()} app`} />
-        <link rel="canonical" href={`https://t4tokito-store.netlify.app/apps/${app.id}`} />
-        <meta property="og:title" content={`${app.name} - Download Free | t4tokito Store`} />
+        <title>{app.name} — Download Free APK for Android | t4tokito Store</title>
+        <meta name="description" content={`Download ${app.name} free for Android. ${app.description} Rated ${app.rating}/5 · ${app.downloads} downloads · No ads, open source.`} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:title" content={`${app.name} — Download Free | t4tokito Store`} />
         <meta property="og:description" content={app.description} />
-        <meta property="og:url" content={`https://t4tokito-store.netlify.app/apps/${app.id}`} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:type" content="website" />
         <meta property="og:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${app.name} - Download Free | t4tokito Store`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`${app.name} — Download Free | t4tokito Store`} />
         <meta name="twitter:description" content={app.description} />
-        <meta name="twitter:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
+        <script type="application/ld+json">{JSON.stringify(softwareJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       </Helmet>
 
       <Header />
 
-      <main id="main-content" style={{ paddingTop: 'calc(var(--header-height) + var(--space-8))' }}>
-        {/* Hero Banner */}
-        <section
-          style={{
-            background: `linear-gradient(135deg, ${app.color}15, ${app.color}30)`,
-            borderBottom: '1px solid var(--border-primary)',
-            padding: 'var(--space-12) 0',
-          }}
-        >
-          <div className="container">
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr',
-                gap: 'var(--space-8)',
-                alignItems: 'center',
-              }}
-              className="app-hero-grid"
-            >
-              <div
-                style={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: 'var(--radius-xl)',
-                  background: `linear-gradient(135deg, ${app.color}, ${app.color}cc)`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '3.5rem',
-                  boxShadow: `0 12px 40px ${app.color}40`,
-                }}
-                aria-hidden="true"
-              >
-                {app.icon}
-              </div>
+      <main id="main-content" style={{ paddingTop: 'calc(var(--header-height) + var(--space-10))' }}>
+        <div className="container">
+          <nav aria-label="Breadcrumb" style={{ marginBottom: 'var(--space-6)', fontSize: 'var(--text-sm)', color: 'var(--muted)' }}>
+            <Link to="/" style={{ color: 'var(--muted)' }}>Store</Link>
+            <span aria-hidden="true" style={{ margin: '0 8px' }}>/</span>
+            <span aria-current="page" style={{ color: 'var(--ink)', fontWeight: 600 }}>{app.name}</span>
+          </nav>
 
-              <div>
-                <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-3)', flexWrap: 'wrap' }}>
-                  <span className="badge badge-primary">{app.category}</span>
-                  <span className="badge badge-secondary">v{app.version}</span>
-                </div>
-                <h1 style={{ fontSize: 'var(--text-4xl)', fontWeight: 800, marginBottom: 'var(--space-2)', letterSpacing: '-0.02em' }}>
-                  {app.name}
-                </h1>
-                <p style={{ color: 'var(--fg-secondary)', fontSize: 'var(--text-lg)', marginBottom: 'var(--space-4)' }}>
-                  {app.tagline}
-                </p>
-                <div style={{ display: 'flex', gap: 'var(--space-6)', fontSize: 'var(--text-sm)', color: 'var(--fg-muted)', flexWrap: 'wrap' }}>
-                  <span>{app.size}</span>
-                  <span>Android {app.androidVersion}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Action Bar */}
-        <section style={{ borderBottom: '1px solid var(--border-primary)', padding: 'var(--space-4) 0' }}>
-          <div className="container">
-            <div className="app-action-bar" style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-              <a
-                href={app.downloadUrl}
-                className="btn btn-primary btn-lg"
-                download
-                style={{ flex: 1, minWidth: 200 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download APK ({app.size})
-              </a>
-              <a
-                href={app.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary btn-lg"
-                style={{ flex: 1, minWidth: 200 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                </svg>
-                View Source
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Description */}
-        <section className="section" style={{ padding: 'var(--space-12) 0' }}>
-          <div className="container" style={{ maxWidth: 800 }}>
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-6)' }}>About {app.name}</h2>
-            {app.fullDescription.split('\n\n').map((paragraph, i) => (
-              <p key={i} style={{ color: 'var(--fg-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-4)' }}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </section>
-
-        {/* Features */}
-        <section className="section" style={{ padding: 'var(--space-12) 0', background: 'var(--bg-secondary)' }}>
-          <div className="container">
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-8)', textAlign: 'center' }}>Features</h2>
-            <div className="features-grid grid grid-3" style={{ gap: 'var(--space-6)' }}>
-              {app.features.map((feature, i) => (
+          {/* Listing header */}
+          <Reveal>
+            <div className="card" style={{ padding: 'clamp(1.25rem, 4vw, 2.5rem)' }}>
+              <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                 <div
-                  key={feature.title}
-                  className="card"
-                  style={{ padding: 'var(--space-6)' }}
-                >
-                  <div style={{ fontSize: '2rem', marginBottom: 'var(--space-3)' }} aria-hidden="true">{feature.icon}</div>
-                  <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>{feature.title}</h3>
-                  <p style={{ color: 'var(--fg-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>{feature.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Tech Stack */}
-        <section className="section" style={{ padding: 'var(--space-12) 0' }}>
-          <div className="container" style={{ maxWidth: 800 }}>
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-6)' }}>Tech Stack</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-              {app.techStack.map((tech) => (
-                <span
-                  key={tech}
-                  className="badge badge-outline"
-                  style={{ padding: 'var(--space-2) var(--space-4)', fontSize: 'var(--text-sm)' }}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Changelog */}
-        <section className="section" style={{ padding: 'var(--space-12) 0', background: 'var(--bg-secondary)' }}>
-          <div className="container" style={{ maxWidth: 800 }}>
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-6)' }}>Changelog</h2>
-            {app.changelog.map((release) => (
-              <div key={release.version} className="card" style={{ padding: 'var(--space-6)', marginBottom: 'var(--space-4)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                  <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600 }}>v{release.version}</h3>
-                  <span style={{ fontSize: 'var(--text-sm)', color: 'var(--fg-muted)' }}>{release.date}</span>
-                </div>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                  {release.changes.map((change, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)', color: 'var(--fg-secondary)', fontSize: 'var(--text-sm)' }}>
-                      <span style={{ color: 'var(--accent-secondary)', marginTop: 2 }}>•</span>
-                      {change}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Screenshots */}
-        <section className="section" style={{ padding: 'var(--space-12) 0' }}>
-          <div className="container">
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-8)', textAlign: 'center' }}>Screenshots</h2>
-            <div className="app-screenshots-grid grid grid-4" style={{ gap: 'var(--space-4)' }}>
-              {app.screenshots.map((screenshot, i) => (
-                <div
-                  key={i}
+                  aria-hidden="true"
                   style={{
-                    aspectRatio: '9/16',
-                    background: `linear-gradient(135deg, ${app.color}20, ${app.color}40)`,
-                    borderRadius: 'var(--radius-lg)',
-                    border: '1px solid var(--border-primary)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 'var(--space-4)',
-                    textAlign: 'center',
+                    width: 104, height: 104, borderRadius: 26, flexShrink: 0,
+                    background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '3rem', boxShadow: 'var(--shadow-lg)',
                   }}
                 >
-                  <span style={{ fontSize: '2rem', marginBottom: 'var(--space-2)' }} aria-hidden="true">{app.icon}</span>
-                  <span style={{ fontSize: 'var(--text-xs)', color: 'var(--fg-muted)' }}>{screenshot.caption}</span>
+                  {app.icon}
                 </div>
+                <div style={{ flex: 1, minWidth: 240 }}>
+                  <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 8 }}>
+                    <span className="chip chip-brand">{app.category}</span>
+                    <span className="chip chip-mono">v{app.version}</span>
+                    <span className="chip chip-mint">Free · No ads</span>
+                  </div>
+                  <h1 style={{ fontSize: 'clamp(1.9rem, 4vw, 2.75rem)' }}>{app.name}</h1>
+                  <p style={{ color: 'var(--muted)', fontSize: 'var(--text-lg)', marginTop: 4 }}>
+                    {app.tagline} · by <span style={{ color: 'var(--ink-2)', fontWeight: 600 }}>t4tokito</span>
+                  </p>
+                  <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
+                    <Link to={`/download/${app.id}`} className="btn btn-primary btn-lg">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                      Install free · {app.size}
+                    </Link>
+                    <a href={app.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-lg">
+                      Source code
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <dl
+                style={{
+                  display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', marginTop: 'var(--space-8)',
+                  borderTop: '1px solid var(--line)', paddingTop: 'var(--space-6)', gap: 'var(--space-4)', textAlign: 'center',
+                }}
+                className="detail-stats"
+              >
+                <div>
+                  <dt style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginBottom: 4 }}>Rating</dt>
+                  <dd style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-xl)', color: 'var(--ink)' }}>
+                    {app.rating} <Stars value={app.rating} />
+                  </dd>
+                  <dd style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>{app.reviews.toLocaleString('en-US')} reviews</dd>
+                </div>
+                <div>
+                  <dt style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginBottom: 4 }}>Downloads</dt>
+                  <dd style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-xl)', color: 'var(--ink)' }}>{app.downloads}</dd>
+                  <dd style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>and growing</dd>
+                </div>
+                <div>
+                  <dt style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginBottom: 4 }}>Size</dt>
+                  <dd style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-xl)', color: 'var(--ink)' }}>{app.size}</dd>
+                  <dd style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>Android {app.androidVersion}</dd>
+                </div>
+                <div>
+                  <dt style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginBottom: 4 }}>Updated</dt>
+                  <dd style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-base)', color: 'var(--ink)' }}>{app.updated}</dd>
+                  <dd style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>v{app.version}</dd>
+                </div>
+              </dl>
+            </div>
+          </Reveal>
+
+          {/* About */}
+          <Reveal>
+            <section aria-labelledby="about-heading" style={{ maxWidth: 760, margin: 'var(--space-12) auto 0' }}>
+              <h2 id="about-heading" style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-4)' }}>About {app.name}</h2>
+              {app.fullDescription.split('\n\n').map((p, i) => (
+                <p key={i} style={{ marginBottom: 'var(--space-4)', color: 'var(--ink-2)' }}>{p}</p>
+              ))}
+            </section>
+          </Reveal>
+
+          {/* Features */}
+          <section aria-labelledby="app-features-heading" style={{ marginTop: 'var(--space-12)' }}>
+            <Reveal>
+              <h2 id="app-features-heading" className="text-center" style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-6)' }}>Features</h2>
+            </Reveal>
+            <div className="grid grid-3" style={{ gap: 'var(--space-4)' }}>
+              {app.features.map((f, i) => (
+                <Reveal key={f.title} delay={(i % 3) * 80}>
+                  <div className="card" style={{ padding: 'var(--space-6)', height: '100%' }}>
+                    <div style={{ fontSize: '1.6rem', marginBottom: 'var(--space-3)' }} aria-hidden="true">{f.icon}</div>
+                    <h3 style={{ fontSize: 'var(--text-base)', marginBottom: 'var(--space-2)' }}>{f.title}</h3>
+                    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)' }}>{f.desc}</p>
+                  </div>
+                </Reveal>
               ))}
             </div>
+          </section>
+
+          {/* Screenshots */}
+          <section aria-labelledby="shots-heading" style={{ marginTop: 'var(--space-12)' }}>
+            <Reveal>
+              <h2 id="shots-heading" className="text-center" style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-6)' }}>Screenshots</h2>
+            </Reveal>
+            <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>
+              {app.screenshots.map((s) => (
+                <Reveal key={s.caption}>
+                  <div className="phone-frame">
+                    <span style={{ fontSize: '2rem' }} aria-hidden="true">{app.icon}</span>
+                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>{s.caption}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          {/* Tech + changelog */}
+          <div className="grid grid-2" style={{ marginTop: 'var(--space-12)', gap: 'var(--space-6)', alignItems: 'start' }}>
+            <Reveal>
+              <section aria-labelledby="stack-heading" className="card" style={{ padding: 'var(--space-6)' }}>
+                <h2 id="stack-heading" style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-4)' }}>Built with</h2>
+                <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                  {app.techStack.map((t) => (
+                    <li key={t} className="chip chip-mono">{t}</li>
+                  ))}
+                </ul>
+              </section>
+            </Reveal>
+            <Reveal delay={100}>
+              <section aria-labelledby="changelog-heading" className="card" style={{ padding: 'var(--space-6)' }}>
+                <h2 id="changelog-heading" style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-4)' }}>Changelog</h2>
+                {app.changelog.map((r) => (
+                  <div key={r.version}>
+                    <p style={{ fontWeight: 700, color: 'var(--ink)', fontSize: 'var(--text-sm)' }}>
+                      v{r.version} <span className="muted mono" style={{ fontWeight: 400, fontSize: 'var(--text-xs)' }}>· {r.date}</span>
+                    </p>
+                    <ul className="tick-list" style={{ marginTop: 'var(--space-3)' }}>
+                      {r.changes.map((c) => (
+                        <li key={c}>
+                          <span className="tick" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                          </span>
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </section>
+            </Reveal>
           </div>
-        </section>
+
+          {/* Cross-link */}
+          {other && (
+            <Reveal>
+              <div className="card card-hover" style={{ margin: 'var(--space-12) 0 var(--space-16)', padding: 'var(--space-6)', display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
+                <div aria-hidden="true" style={{ width: 52, height: 52, borderRadius: 15, background: `linear-gradient(135deg, ${other.color}, ${other.color}b3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
+                  {other.icon}
+                </div>
+                <div style={{ flex: 1, minWidth: 200 }}>
+                  <p style={{ fontWeight: 700, color: 'var(--ink)' }}>Also free: {other.name}</p>
+                  <p className="muted" style={{ fontSize: 'var(--text-sm)' }}>{other.tagline} · {other.rating}★ · {other.downloads} downloads</p>
+                </div>
+                <Link to={`/apps/${other.id}`} className="btn btn-secondary">View {other.name}</Link>
+              </div>
+            </Reveal>
+          )}
+        </div>
       </main>
 
       <Footer />
+
+      <style>{`
+        @media (max-width: 640px) {
+          .detail-stats { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </>
   );
 }

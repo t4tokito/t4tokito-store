@@ -1,16 +1,52 @@
-# React + Vite
+# t4tokito Store — Download Free Android Apps
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**t4tokito Store** (also known as **Tokito Store** / **Muichiro Store**) is the official website to download
+free Android apps built by indie developer [**t4tokito**](https://github.com/t4tokito).
+No ads. No tracking. 100% open source.
 
-Currently, two official plugins are available:
+🌐 Live: **https://t4tokito-store.netlify.app/**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📱 Apps
 
-## React Compiler
+| App | What it does | Rating | Download |
+|-----|--------------|--------|----------|
+| **TokitoTV** 🎬 | Free anime streaming app for Android — trending shows, continue watching, 40+ genres, dark theme. Built with Expo + AniList API. | ★ 4.8 (2,847 reviews) | [APK](https://t4tokito-store.netlify.app/download/tokitotv) · [Source](https://github.com/t4tokito/TokitoTv) |
+| **YT Notes Maker** 📝 | Turn any YouTube video into AI-powered notes, flashcards & quizzes. Firebase sync + offline support. | ★ 4.9 (1,234 reviews) | [APK](https://t4tokito-store.netlify.app/download/yt-notes-maker) · [Source](https://github.com/t4tokito/yt-notes-maker) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Store features
 
-## Expanding the Oxlint configuration
+- Modern, clean, mobile-first design with light + dark mode
+- SEO optimized: meta tags, Open Graph, JSON-LD (WebSite, SoftwareApplication, FAQ, Breadcrumbs), sitemap, robots.txt
+- Per-app detail pages with ratings, features, screenshots, changelog
+- One-tap APK download pages with install guides
+- Fully client-side — React + Vite + React Router
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🛠️ Local development
+
+```bash
+npm install
+npm run dev      # start dev server
+npm run build    # production build → dist/
+npm run preview  # preview production build
+```
+
+## 📁 Project structure
+
+```
+src/
+  components/   # Header, Hero, AppGrid, Features, FAQ, Testimonials, CTA, Footer
+  pages/        # AppDetail, DownloadPage, PrivacyPolicy, TermsOfService, NotFound
+  data/apps.js  # App catalogue (single source of truth)
+  hooks/        # useTheme (light/dark mode)
+public/         # sitemap.xml, robots.txt, _redirects, icons, manifest
+```
+
+## 🤝 Contributing
+
+Found a bug or want a feature? Open an issue or PR —
+or contribute directly to [TokitoTV](https://github.com/t4tokito/TokitoTv) and
+[YT Notes Maker](https://github.com/t4tokito/yt-notes-maker).
+
+## 📄 License
+
+Store website: MIT. Individual apps follow their own repository licences.
