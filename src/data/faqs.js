@@ -20,6 +20,10 @@ export const faqs = [
     a: 'TokitoTV is a free anime streaming app for Android by t4tokito, built with Expo and React Native on top of the AniList database. It offers trending and popular anime discovery, genre browsing across 40+ genres, continue-watching, and a dark theme designed for late-night viewing.',
   },
   {
+    q: 'Why are TokitoTV and YT Notes Maker under maintenance?',
+    a: 'Both apps are temporarily paused while we fix technical issues — streaming playback in TokitoTV and note generation in YT Notes Maker. Downloads are disabled until the fixes land, but apps you already installed keep working and your data is safe. Tokito Music is fully available right now.',
+  },
+  {
     q: 'What is Tokito Music?',
     a: 'Tokito Music is a free music streaming app for Android by t4tokito with a Spotify-style dark UI. Stream songs in 320kbps quality with unlimited skips, build playlists, like tracks, and sync your library across devices with cloud sync. No ads, no subscription — free forever.',
   },

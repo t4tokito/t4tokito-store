@@ -48,6 +48,11 @@ export default function CTA() {
                   >
                     <img src={app.icon} alt="" width="26" height="26" loading="lazy" decoding="async" style={{ width: 26, height: 26, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
                     {app.name}
+                    {app.maintenance && (
+                      <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, opacity: 0.65, border: '1px solid currentColor', borderRadius: 999, padding: '1px 8px' }}>
+                        paused
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>

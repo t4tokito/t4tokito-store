@@ -89,6 +89,11 @@ export default function Hero() {
                 </div>
                 <h2 style={{ fontSize: 'var(--text-base)', marginTop: 6 }}>{app.name}</h2>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginTop: 2 }}>{app.tagline} · {app.size}</p>
+                {app.maintenance && (
+                  <span className="chip" style={{ marginTop: 6, background: 'var(--amber-soft)', borderColor: 'transparent', color: 'var(--amber)' }}>
+                    Under maintenance
+                  </span>
+                )}
               </div>
             </Link>
           ))}

@@ -5,6 +5,7 @@ import { getAppById } from '../data/apps';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AppIcon from '../components/AppIcon';
+import MaintenanceBanner from '../components/MaintenanceBanner';
 
 const steps = [
   { title: 'Download the APK', text: 'Tap the button below. The file is small (25–30 MB) and comes straight from the open-source release.' },
@@ -61,6 +62,7 @@ export default function DownloadPage() {
         <meta property="og:url" content={canonical} />
         <meta property="og:image" content="https://t4tokito-store.netlify.app/logo.jpeg" />
         <meta name="twitter:card" content="summary" />
+        {app.maintenance && <meta name="robots" content="noindex, nofollow" />}
       </Helmet>
 
       <Header />
@@ -85,17 +87,24 @@ export default function DownloadPage() {
               v{app.version} · {app.size} · Android {app.androidVersion} · ★ {app.rating} ({app.reviews.toLocaleString('en-US')})
             </p>
 
-            <button onClick={handleDownload} disabled={downloading} className="btn btn-primary btn-lg btn-full" style={{ marginTop: 'var(--space-6)', fontSize: 'var(--text-base)' }}>
-              {downloading ? (
-                <><svg className="animate-spin" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.56" /></svg> Preparing download…</>
-              ) : (
-                <>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  Download {app.name} APK
-                </>
-              )}
+            {app.maintenance ? (
+              <div style={{ marginTop: 'var(--space-6)', textAlign: 'left' }}>
+                <MaintenanceBanner app={app} compact />
+              </div>
+            ) : (
+              <button onClick={handleDownload} disabled={downloading} className="btn btn-primary btn-lg btn-full" style={{ marginTop: 'var(--space-6)', fontSize: 'var(--text-base)' }}>
+                {downloading ? (
+                  <><svg className="animate-spin" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.56" /></svg> Preparing download…</>
+                ) : (
+                  <>
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download {app.name} APK
+                  </>
+                )}
+              </button>
+            )}
             </button>
 
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-3)', flexWrap: 'wrap' }}>

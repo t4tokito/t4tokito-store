@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import AppIcon from '../components/AppIcon';
+import MaintenanceBanner from '../components/MaintenanceBanner';
 
 function Stars({ value }) {
   return (
@@ -109,19 +110,29 @@ export default function AppDetail() {
                   <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 8 }}>
                     <span className="chip chip-brand">{app.category}</span>
                     <span className="chip chip-mono">v{app.version}</span>
-                    <span className="chip chip-mint">Free · No ads</span>
+                    {app.maintenance ? (
+                      <span className="chip" style={{ background: 'var(--amber-soft)', borderColor: 'transparent', color: 'var(--amber)' }}>Under maintenance</span>
+                    ) : (
+                      <span className="chip chip-mint">Free · No ads</span>
+                    )}
                   </div>
                   <h1 style={{ fontSize: 'clamp(1.9rem, 4vw, 2.75rem)' }}>{app.name}</h1>
                   <p style={{ color: 'var(--muted)', fontSize: 'var(--text-lg)', marginTop: 4 }}>
                     {app.tagline} · by <span style={{ color: 'var(--ink-2)', fontWeight: 600 }}>t4tokito</span>
                   </p>
                   <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
-                    <Link to={`/download/${app.id}`} className="btn btn-primary btn-lg">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-                      </svg>
-                      Install free · {app.size}
-                    </Link>
+                    {app.maintenance ? (
+                      <button className="btn btn-primary btn-lg" disabled style={{ flex: 1, minWidth: 200 }} title="Downloads paused during maintenance">
+                        Download paused — back soon
+                      </button>
+                    ) : (
+                      <Link to={`/download/${app.id}`} className="btn btn-primary btn-lg" style={{ flex: 1, minWidth: 200 }}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Install free · {app.size}
+                      </Link>
+                    )}
                     <a href={app.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-lg">
                       Source code
                     </a>
@@ -161,6 +172,14 @@ export default function AppDetail() {
               </dl>
             </div>
           </Reveal>
+
+          {app.maintenance && (
+            <Reveal>
+              <div style={{ marginTop: 'var(--space-6)' }}>
+                <MaintenanceBanner app={app} />
+              </div>
+            </Reveal>
+          )}
 
           {/* About */}
           <Reveal>

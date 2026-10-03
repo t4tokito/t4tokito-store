@@ -26,7 +26,7 @@ export default function AppGrid() {
             <p className="eyebrow">The collection</p>
             <h2 id="apps-heading">Three apps. Each one does<br />one job brilliantly.</h2>
             <p style={{ fontSize: 'var(--text-lg)', color: 'var(--muted)', marginTop: 'var(--space-3)' }}>
-              Free forever, no ads, no sign-up walls. Pick one and install in under a minute.
+              Free forever, no ads, no sign-up walls. Tokito Music is ready to install — the other two are back soon.
             </p>
           </div>
         </Reveal>
@@ -41,6 +41,11 @@ export default function AppGrid() {
                     <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 6 }}>
                       <span className="chip chip-brand">{app.category}</span>
                       <span className="chip chip-mono">v{app.version}</span>
+                      {app.maintenance && (
+                        <span className="chip" style={{ background: 'var(--amber-soft)', borderColor: 'transparent', color: 'var(--amber)' }}>
+                          Under maintenance
+                        </span>
+                      )}
                     </div>
                     <h3 style={{ fontSize: 'var(--text-xl)' }}>{app.name}</h3>
                     <p style={{ color: 'var(--brand)', fontSize: 'var(--text-sm)', fontWeight: 600, marginTop: 2 }}>{app.tagline}</p>
@@ -73,12 +78,18 @@ export default function AppGrid() {
                   <Link to={`/apps/${app.id}`} className="btn btn-primary" style={{ flex: 1, minWidth: 120 }}>
                     Details
                   </Link>
-                  <Link to={`/download/${app.id}`} className="btn btn-secondary" style={{ flex: 1, minWidth: 120 }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    Get free
-                  </Link>
+                  {app.maintenance ? (
+                    <button className="btn btn-secondary" disabled style={{ flex: 1, minWidth: 120 }} title="Downloads paused during maintenance">
+                      Download paused
+                    </button>
+                  ) : (
+                    <Link to={`/download/${app.id}`} className="btn btn-secondary" style={{ flex: 1, minWidth: 120 }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                      Get free
+                    </Link>
+                  )}
                 </div>
               </article>
             </Reveal>
