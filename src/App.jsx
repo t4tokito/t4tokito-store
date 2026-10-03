@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,14 +9,27 @@ import Features from './components/Features';
 import Stats from './components/Stats';
 import FAQ from './components/FAQ';
 import { faqs } from './data/faqs';
+import AboutStore from './components/AboutStore';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
-import AppDetail from './pages/AppDetail';
-import DownloadPage from './pages/DownloadPage';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import NotFound from './pages/NotFound';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+
+// Code-split below-the-fold routes for a faster first paint (better Core Web Vitals).
+const AppDetail = lazy(() => import('./pages/AppDetail'));
+const DownloadPage = lazy(() => import('./pages/DownloadPage'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+function PageFallback() {
+  return (
+    <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="Loading page">
+      <svg className="animate-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+        <path d="M21 12a9 9 0 1 1-6.2-8.56" />
+      </svg>
+    </div>
+  );
+}
 
 const SITE = 'https://t4tokito-store.netlify.app';
 const DEFAULT_DESC =
@@ -31,7 +44,7 @@ function ScrollToTop() {
 }
 
 function SEO({ title, description = DEFAULT_DESC, canonical, noIndex = false, jsonLd = null }) {
-  const fullTitle = title ? `${title} | t4tokito Store` : 't4tokito Store — Download Free Android Apps (TokitoTV, Tokito Music & YT Notes Maker)';
+  const fullTitle = title ? `${title} | t4tokito Store` : 't4tokito Store — Download Free Android Apps';
   const url = canonical || `${SITE}/`;
   const image = `${SITE}/logo.jpeg`;
 
@@ -92,6 +105,7 @@ function HomePage() {
           <AppGrid />
           <Features />
           <Testimonials />
+          <AboutStore />
           <FAQ />
           <CTA />
         </main>
@@ -105,38 +119,40 @@ export default function App() {
   return (
     <HelmetProvider>
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/apps/:appId" element={<AppDetail />} />
-        <Route path="/download/:appId" element={<DownloadPage />} />
-        <Route
-          path="/privacy"
-          element={
-            <>
-              <SEO title="Privacy Policy" description="t4tokito Store Privacy Policy — this website collects no personal data. No cookies, no analytics, no tracking." noIndex canonical={`${SITE}/privacy`} />
-              <PrivacyPolicy />
-            </>
-          }
-        />
-        <Route
-          path="/terms"
-          element={
-            <>
-              <SEO title="Terms of Service" description="t4tokito Store Terms of Service — terms for downloading free apps TokitoTV and YT Notes Maker." noIndex canonical={`${SITE}/terms`} />
-              <TermsOfService />
-            </>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <>
-              <SEO title="Page Not Found" description="The page you're looking for doesn't exist on t4tokito Store." noIndex />
-              <NotFound />
-            </>
-          }
-        />
-      </Routes>
+      <Suspense fallback={<PageFallback />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/apps/:appId" element={<AppDetail />} />
+          <Route path="/download/:appId" element={<DownloadPage />} />
+          <Route
+            path="/privacy"
+            element={
+              <>
+                <SEO title="Privacy Policy" description="t4tokito Store Privacy Policy — this website collects no personal data. No cookies, no analytics, no tracking." noIndex canonical={`${SITE}/privacy`} />
+                <PrivacyPolicy />
+              </>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <>
+                <SEO title="Terms of Service" description="t4tokito Store Terms of Service — terms for downloading free apps TokitoTV, Tokito Music and YT Notes Maker." noIndex canonical={`${SITE}/terms`} />
+                <TermsOfService />
+              </>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <>
+                <SEO title="Page Not Found" description="The page you're looking for doesn't exist on t4tokito Store." noIndex />
+                <NotFound />
+              </>
+            }
+          />
+        </Routes>
+      </Suspense>
     </HelmetProvider>
   );
 }

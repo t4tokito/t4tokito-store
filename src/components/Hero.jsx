@@ -25,10 +25,13 @@ export default function Hero() {
       <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 860 }}>
         <p className="eyebrow animate-rise" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
           <span className="dot" aria-hidden="true" />
-          t4tokito store · 3 apps · 100% free
+          3 apps · 100% free · open source
         </p>
 
         <h1 id="hero-title" className="animate-rise stagger-1" style={{ marginBottom: 'var(--space-5)' }}>
+          <span style={{ display: 'block', fontSize: '0.38em', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 'var(--space-3)' }}>
+            t4tokito Store
+          </span>
           Free Android apps
           <br />
           that <span style={{ color: 'var(--brand)' }}>respect&nbsp;you.</span>
