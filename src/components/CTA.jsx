@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
+import { apps } from '../data/apps';
+
+const ctaApps = apps;
 
 export default function CTA() {
   return (
@@ -25,32 +28,27 @@ export default function CTA() {
               <h2 id="cta-heading" style={{ color: '#fafaf9', marginBottom: 'var(--space-4)' }}>
                 Your next favourite app<br />is one tap away.
               </h2>
-              <p style={{ color: 'rgba(250,250,249,0.72)', fontSize: 'var(--text-lg)', maxWidth: 520, margin: '0 auto var(--space-8)' }}>
-                TokitoTV for anime nights. YT Notes Maker for exam season. Both free, both yours.
+              <p style={{ color: 'rgba(250,250,249,0.72)', fontSize: 'var(--text-lg)', maxWidth: 560, margin: '0 auto var(--space-8)' }}>
+                TokitoTV for anime nights. Tokito Music for everything else. YT Notes Maker for exam season.
               </p>
               <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link
-                  to="/apps/tokitotv"
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    padding: '15px 30px', borderRadius: 12, fontWeight: 700, fontSize: 'var(--text-base)',
-                    background: '#fafaf9', color: '#09090b', transition: 'transform var(--transition-fast), box-shadow var(--transition-fast)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-                  }}
-                >
-                  <span aria-hidden="true">🎬</span> Download TokitoTV
-                </Link>
-                <Link
-                  to="/apps/yt-notes-maker"
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    padding: '15px 30px', borderRadius: 12, fontWeight: 600, fontSize: 'var(--text-base)',
-                    background: 'transparent', color: '#fafaf9', border: '1px solid rgba(250,250,249,0.35)',
-                    transition: 'all var(--transition-fast)',
-                  }}
-                >
-                  <span aria-hidden="true">📝</span> Get YT Notes Maker
-                </Link>
+                {ctaApps.map((app, i) => (
+                  <Link
+                    key={app.id}
+                    to={`/apps/${app.id}`}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 10,
+                      padding: '12px 22px', borderRadius: 12, fontWeight: i === 0 ? 700 : 600, fontSize: 'var(--text-base)',
+                      background: i === 0 ? '#fafaf9' : 'transparent',
+                      color: i === 0 ? '#09090b' : '#fafaf9',
+                      border: i === 0 ? 'none' : '1px solid rgba(250,250,249,0.35)',
+                      transition: 'all var(--transition-fast)',
+                    }}
+                  >
+                    <img src={app.icon} alt="" width="26" height="26" loading="lazy" decoding="async" style={{ width: 26, height: 26, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
+                    {app.name}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 export const faqs = [
   {
     q: 'What is t4tokito Store?',
-    a: 't4tokito Store (also known as Tokito Store or Muichiro Store) is the official website to download free Android apps built by indie developer t4tokito — currently TokitoTV, a free anime streaming app, and YT Notes Maker, an AI app that turns YouTube videos into study notes. Every app is free, ad-free, and open source on GitHub.',
+    a: 't4tokito Store (also known as Tokito Store or Muichiro Store) is the official website to download free Android apps built by indie developer t4tokito — TokitoTV (free anime streaming), Tokito Music (free music streaming), and YT Notes Maker (an AI app that turns YouTube videos into study notes). Every app is free, ad-free, and open source on GitHub.',
   },
   {
     q: 'Are t4tokito apps really free? What\u2019s the catch?',
@@ -18,6 +18,10 @@ export const faqs = [
   {
     q: 'What is TokitoTV?',
     a: 'TokitoTV is a free anime streaming app for Android by t4tokito, built with Expo and React Native on top of the AniList database. It offers trending and popular anime discovery, genre browsing across 40+ genres, continue-watching, and a dark theme designed for late-night viewing.',
+  },
+  {
+    q: 'What is Tokito Music?',
+    a: 'Tokito Music is a free music streaming app for Android by t4tokito with a Spotify-style dark UI. Stream songs in 320kbps quality with unlimited skips, build playlists, like tracks, and sync your library across devices with cloud sync. No ads, no subscription — free forever.',
   },
   {
     q: 'What is YT Notes Maker?',

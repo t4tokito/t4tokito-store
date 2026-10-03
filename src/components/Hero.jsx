@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { apps } from '../data/apps';
+import AppIcon from './AppIcon';
 
 function Stars({ value }) {
   return (
@@ -24,7 +25,7 @@ export default function Hero() {
       <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 860 }}>
         <p className="eyebrow animate-rise" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
           <span className="dot" aria-hidden="true" />
-          t4tokito store · 2 apps · 100% free
+          t4tokito store · 3 apps · 100% free
         </p>
 
         <h1 id="hero-title" className="animate-rise stagger-1" style={{ marginBottom: 'var(--space-5)' }}>
@@ -34,7 +35,8 @@ export default function Hero() {
         </h1>
 
         <p className="animate-rise stagger-2" style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: 'var(--muted)', maxWidth: 620, margin: '0 auto var(--space-8)', lineHeight: 1.7 }}>
-          Download <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>TokitoTV</strong> for anime streaming
+          Download <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>TokitoTV</strong> for anime streaming,{' '}
+          <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>Tokito Music</strong> for free music,
           and <strong style={{ color: 'var(--ink-2)', fontWeight: 600 }}>YT Notes Maker</strong> for AI study notes.
           No ads, no tracking — and every line of code is open source.
         </p>
@@ -56,10 +58,10 @@ export default function Hero() {
 
         <div className="animate-rise stagger-4" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-5)', flexWrap: 'wrap', fontSize: 'var(--text-sm)', color: 'var(--muted)', marginBottom: 'var(--space-12)' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <Stars value={5} /> <strong style={{ color: 'var(--ink)' }}>4.8/5</strong> average rating
+            <Stars value={5} /> <strong style={{ color: 'var(--ink)' }}>4.9/5</strong> average rating
           </span>
           <span aria-hidden="true" style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--line-strong)' }} />
-          <span><strong style={{ color: 'var(--ink)' }}>15K+</strong> downloads</span>
+          <span><strong style={{ color: 'var(--ink)' }}>16K+</strong> downloads</span>
           <span aria-hidden="true" style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--line-strong)' }} />
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
@@ -68,39 +70,25 @@ export default function Hero() {
         </div>
 
         {/* Signature: Play-Store-style listing cards with oversized rating numerals */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)', textAlign: 'left' }} className="hero-cards">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)', textAlign: 'left' }} className="hero-cards">
           {apps.map((app, i) => (
             <Link
               key={app.id}
               to={`/apps/${app.id}`}
-              className={`card card-hover animate-rise stagger-${i + 3}`}
-              style={{ padding: 'var(--space-6)', display: 'flex', gap: 'var(--space-5)', alignItems: 'flex-start' }}
+              className={`card card-hover animate-rise stagger-${i + 2}`}
+              style={{ padding: 'var(--space-5)', display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}
               aria-label={`${app.name} — ${app.tagline}. Rated ${app.rating} out of 5. View details and download.`}
             >
-              <div
-                aria-hidden="true"
-                style={{
-                  width: 62, height: 62, borderRadius: 18, flexShrink: 0,
-                  background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.9rem', boxShadow: 'var(--shadow-md)',
-                }}
-              >
-                {app.icon}
-              </div>
+              <AppIcon app={app} size={56} radius={16} eager />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.7rem', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1 }}>
                     {app.rating}
                   </span>
                   <Stars value={app.rating} />
                 </div>
-                <h2 style={{ fontSize: 'var(--text-lg)', marginTop: 6 }}>{app.name}</h2>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)', marginTop: 2 }}>{app.tagline} · {app.size} · {app.downloads} downloads</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 'var(--space-3)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--brand)' }}>
-                  Get the app
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-                </span>
+                <h2 style={{ fontSize: 'var(--text-base)', marginTop: 6 }}>{app.name}</h2>
+                <p style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)', marginTop: 2 }}>{app.tagline} · {app.size}</p>
               </div>
             </Link>
           ))}
@@ -108,7 +96,7 @@ export default function Hero() {
       </div>
 
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 960px) {
           .hero-cards { grid-template-columns: 1fr !important; }
         }
       `}</style>

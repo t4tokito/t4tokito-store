@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { getAppById } from '../data/apps';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AppIcon from '../components/AppIcon';
 
 const steps = [
   { title: 'Download the APK', text: 'Tap the button below. The file is small (25–30 MB) and comes straight from the open-source release.' },
@@ -75,16 +76,8 @@ export default function DownloadPage() {
           </nav>
 
           <div className="card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)', textAlign: 'center' }}>
-            <div
-              aria-hidden="true"
-              style={{
-                width: 88, height: 88, borderRadius: 24, margin: '0 auto var(--space-5)',
-                background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '2.6rem', boxShadow: 'var(--shadow-lg)',
-              }}
-            >
-              {app.icon}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-5)' }}>
+              <AppIcon app={app} size={88} radius={24} eager />
             </div>
             <p className="chip chip-mint" style={{ marginBottom: 'var(--space-3)' }}>Free · No ads · Open source</p>
             <h1 style={{ fontSize: 'clamp(1.7rem, 4vw, 2.4rem)' }}>Download {app.name}</h1>
@@ -94,7 +87,7 @@ export default function DownloadPage() {
 
             <button onClick={handleDownload} disabled={downloading} className="btn btn-primary btn-lg btn-full" style={{ marginTop: 'var(--space-6)', fontSize: 'var(--text-base)' }}>
               {downloading ? (
-                <><span className="animate-spin" style={{ display: 'inline-block' }} aria-hidden="true">⏳</span> Preparing download…</>
+                <><svg className="animate-spin" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.56" /></svg> Preparing download…</>
               ) : (
                 <>
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -137,7 +130,9 @@ export default function DownloadPage() {
           </section>
 
           <div className="card" style={{ padding: 'var(--space-6)', marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-4)', textAlign: 'left', borderStyle: 'dashed' }}>
-            <span aria-hidden="true" style={{ fontSize: '1.4rem' }}>🛡️</span>
+            <span aria-hidden="true" style={{ flexShrink: 0, width: 36, height: 36, borderRadius: 10, background: 'var(--mint-soft)', color: 'var(--mint)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+            </span>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--ink-2)' }}>
               <strong style={{ color: 'var(--ink)' }}>Safe to install.</strong> This APK is built from the{' '}
               <a href={app.githubUrl} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 600 }}>public source code</a>{' '}

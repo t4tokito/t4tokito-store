@@ -5,6 +5,7 @@ import { getAppById, apps } from '../data/apps';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
+import AppIcon from '../components/AppIcon';
 
 function Stars({ value }) {
   return (
@@ -103,17 +104,7 @@ export default function AppDetail() {
           <Reveal>
             <div className="card" style={{ padding: 'clamp(1.25rem, 4vw, 2.5rem)' }}>
               <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                <div
-                  aria-hidden="true"
-                  style={{
-                    width: 104, height: 104, borderRadius: 26, flexShrink: 0,
-                    background: `linear-gradient(135deg, ${app.color}, ${app.color}b3)`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '3rem', boxShadow: 'var(--shadow-lg)',
-                  }}
-                >
-                  {app.icon}
-                </div>
+                <AppIcon app={app} size={104} radius={26} eager />
                 <div style={{ flex: 1, minWidth: 240 }}>
                   <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 8 }}>
                     <span className="chip chip-brand">{app.category}</span>
@@ -190,7 +181,18 @@ export default function AppDetail() {
               {app.features.map((f, i) => (
                 <Reveal key={f.title} delay={(i % 3) * 80}>
                   <div className="card" style={{ padding: 'var(--space-6)', height: '100%' }}>
-                    <div style={{ fontSize: '1.6rem', marginBottom: 'var(--space-3)' }} aria-hidden="true">{f.icon}</div>
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        width: 34, height: 34, borderRadius: 10, marginBottom: 'var(--space-3)',
+                        background: 'var(--brand-soft)', color: 'var(--brand)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontWeight: 700, fontSize: 'var(--text-sm)',
+                        fontFamily: 'var(--font-mono)',
+                      }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
                     <h3 style={{ fontSize: 'var(--text-base)', marginBottom: 'var(--space-2)' }}>{f.title}</h3>
                     <p style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)' }}>{f.desc}</p>
                   </div>
@@ -208,7 +210,7 @@ export default function AppDetail() {
               {app.screenshots.map((s) => (
                 <Reveal key={s.caption}>
                   <div className="phone-frame">
-                    <span style={{ fontSize: '2rem' }} aria-hidden="true">{app.icon}</span>
+                    <AppIcon app={app} size={48} radius={14} />
                     <span style={{ fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>{s.caption}</span>
                   </div>
                 </Reveal>
@@ -256,9 +258,7 @@ export default function AppDetail() {
           {other && (
             <Reveal>
               <div className="card card-hover" style={{ margin: 'var(--space-12) 0 var(--space-16)', padding: 'var(--space-6)', display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-                <div aria-hidden="true" style={{ width: 52, height: 52, borderRadius: 15, background: `linear-gradient(135deg, ${other.color}, ${other.color}b3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
-                  {other.icon}
-                </div>
+                <AppIcon app={other} size={52} radius={15} />
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <p style={{ fontWeight: 700, color: 'var(--ink)' }}>Also free: {other.name}</p>
                   <p className="muted" style={{ fontSize: 'var(--text-sm)' }}>{other.tagline} · {other.rating}★ · {other.downloads} downloads</p>

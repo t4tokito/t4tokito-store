@@ -1,9 +1,9 @@
 import Reveal from './Reveal';
 
 const stats = [
-  { value: '15K+', label: 'Total downloads' },
-  { value: '4.8/5', label: 'Average rating' },
-  { value: '4,081', label: 'User reviews' },
+  { value: '16K+', label: 'Total downloads' },
+  { value: '4.9/5', label: 'Average rating' },
+  { value: '4,295', label: 'User reviews' },
   { value: '100%', label: 'Free & open source' },
 ];
 

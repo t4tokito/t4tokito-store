@@ -20,7 +20,7 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 const SITE = 'https://t4tokito-store.netlify.app';
 const DEFAULT_DESC =
-  't4tokito Store — download free Android apps by t4tokito. TokitoTV anime streaming app and YT Notes Maker AI study-notes app. Free, no ads, open source. Also known as Tokito Store and Muichiro Store.';
+  't4tokito Store — download free Android apps by t4tokito. TokitoTV anime streaming, Tokito Music streaming, and YT Notes Maker AI study-notes app. Free, no ads, open source. Also known as Tokito Store and Muichiro Store.';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -31,7 +31,7 @@ function ScrollToTop() {
 }
 
 function SEO({ title, description = DEFAULT_DESC, canonical, noIndex = false, jsonLd = null }) {
-  const fullTitle = title ? `${title} | t4tokito Store` : 't4tokito Store — Download Free Android Apps (TokitoTV & YT Notes Maker)';
+  const fullTitle = title ? `${title} | t4tokito Store` : 't4tokito Store — Download Free Android Apps (TokitoTV, Tokito Music & YT Notes Maker)';
   const url = canonical || `${SITE}/`;
   const image = `${SITE}/logo.jpeg`;
 
@@ -65,7 +65,8 @@ const homeJsonLd = {
       name: 'Free Android apps by t4tokito',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'TokitoTV', url: `${SITE}/apps/tokitotv` },
-        { '@type': 'ListItem', position: 2, name: 'YT Notes Maker', url: `${SITE}/apps/yt-notes-maker` },
+        { '@type': 'ListItem', position: 2, name: 'Tokito Music', url: `${SITE}/apps/tokito-music` },
+        { '@type': 'ListItem', position: 3, name: 'YT Notes Maker', url: `${SITE}/apps/yt-notes-maker` },
       ],
     },
     {

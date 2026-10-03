@@ -11,6 +11,7 @@ No ads. No tracking. 100% open source.
 | App | What it does | Rating | Download |
 |-----|--------------|--------|----------|
 | **TokitoTV** 🎬 | Free anime streaming app for Android — trending shows, continue watching, 40+ genres, dark theme. Built with Expo + AniList API. | ★ 4.8 (2,847 reviews) | [APK](https://t4tokito-store.netlify.app/download/tokitotv) · [Source](https://github.com/t4tokito/TokitoTv) |
+| **Tokito Music** 🎵 | Free music streaming app — 320kbps quality, unlimited skips, playlists, background playback, cloud sync. Spotify-style dark UI. | ★ 5.0 (214 reviews) | [APK](https://t4tokito-store.netlify.app/download/tokito-music) · [Source](https://github.com/t4tokito/spotify-alt) |
 | **YT Notes Maker** 📝 | Turn any YouTube video into AI-powered notes, flashcards & quizzes. Firebase sync + offline support. | ★ 4.9 (1,234 reviews) | [APK](https://t4tokito-store.netlify.app/download/yt-notes-maker) · [Source](https://github.com/t4tokito/yt-notes-maker) |
 
 ## ✨ Store features

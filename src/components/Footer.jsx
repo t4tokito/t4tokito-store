@@ -5,8 +5,10 @@ const columns = [
     title: 'Apps',
     links: [
       { label: 'TokitoTV — anime streaming app', to: '/apps/tokitotv' },
+      { label: 'Tokito Music — free music streaming', to: '/apps/tokito-music' },
       { label: 'YT Notes Maker — AI study notes', to: '/apps/yt-notes-maker' },
       { label: 'Download TokitoTV APK', to: '/download/tokitotv' },
+      { label: 'Download Tokito Music APK', to: '/download/tokito-music' },
       { label: 'Download YT Notes Maker APK', to: '/download/yt-notes-maker' },
     ],
   },
@@ -24,6 +26,7 @@ const columns = [
     links: [
       { label: 'GitHub — t4tokito', href: 'https://github.com/t4tokito', external: true },
       { label: 'TokitoTV source code', href: 'https://github.com/t4tokito/TokitoTv', external: true },
+      { label: 'Tokito Music source', href: 'https://github.com/t4tokito/spotify-alt', external: true },
       { label: 'YT Notes Maker source', href: 'https://github.com/t4tokito/yt-notes-maker', external: true },
     ],
   },
@@ -56,7 +59,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)', lineHeight: 1.7, maxWidth: 300 }}>
-              The official store for free Android apps by t4tokito — TokitoTV anime streaming and YT Notes Maker AI notes. Also known as Tokito Store and Muichiro Store.
+              The official store for free Android apps by t4tokito — TokitoTV anime streaming, Tokito Music streaming, and YT Notes Maker AI notes. Also known as Tokito Store and Muichiro Store.
             </p>
             <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: 'var(--space-5)' }}>
               <a
