@@ -94,7 +94,7 @@ Sign in to sync your library, playlists, and likes across devices with Firebase 
     category: 'Music',
     version: '1.0.0',
     updated: 'October 3, 2026',
-    size: '28 MB',
+    size: '105 MB',
     androidVersion: '7.0+',
     downloads: '1K+',
     rating: 5.0,
@@ -117,7 +117,7 @@ Sign in to sync your library, playlists, and likes across devices with Firebase 
       { alt: 'Tokito Music Player', caption: 'Now Playing - 320kbps' },
       { alt: 'Tokito Music Library', caption: 'Playlists & Liked Songs' },
     ],
-    downloadUrl: '/downloads/tokito-music.apk',
+    downloadUrl: 'https://github.com/t4tokito/spotify-alt/releases/download/v1.0.0/tokito-music.apk',
     githubUrl: 'https://github.com/t4tokito/spotify-alt',
     changelog: [
       { version: '1.0.0', date: '2026-10-03', changes: ['Initial release', '320kbps music streaming', 'Playlists & liked songs', 'Background playback', 'Firebase auth & cloud sync', 'Search across millions of tracks'] },

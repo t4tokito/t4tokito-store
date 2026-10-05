@@ -8,7 +8,7 @@ import AppIcon from '../components/AppIcon';
 import MaintenanceBanner from '../components/MaintenanceBanner';
 
 const steps = [
-  { title: 'Download the APK', text: 'Tap the button below. The file is small (25–30 MB) and comes straight from the open-source release.' },
+  { title: 'Download the APK', text: 'Tap the button below. The file comes straight from the open-source GitHub release, unmodified and free.' },
   { title: 'Allow installs from your browser', text: 'Android will ask for permission once (“Install unknown apps”). Allow it for your browser — this is standard for apps outside the Play Store.' },
   { title: 'Open the file and install', text: 'Open the downloaded APK from your notifications or Downloads folder, tap Install, and you\u2019re done. Updates work the same way.' },
 ];
@@ -42,8 +42,16 @@ export default function DownloadPage() {
 
   const handleDownload = () => {
     setDownloading(true);
+    const url = app.downloadUrl;
+    if (/^https?:\/\//.test(url)) {
+      // External host (e.g. GitHub Release serves with Content-Disposition:
+      // attachment, so this lands as a file download, not a page visit).
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setDownloading(false);
+      return;
+    }
     const link = document.createElement('a');
-    link.href = app.downloadUrl;
+    link.href = url;
     link.setAttribute('download', '');
     document.body.appendChild(link);
     link.click();
